@@ -1,12 +1,238 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfolio</title>
+  <title>DevPortfolio</title>
+  <meta name="description" content="웹 게임과 실시간 통신을 다루는 개발자 포트폴리오">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-  <h1>테스트</h1>
-  <p>배포 확인용</p>
+
+  <!-- ══ 내비게이션 ══════════════════════════════════ -->
+  <nav class="nav">
+    <div class="wrap">
+      <a href="#" class="nav-logo">DevPortfolio</a>
+      <ul class="nav-menu">
+        <li><a href="#about">About Me</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#archiving">Archiving</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#career">Career</a></li>
+      </ul>
+      <a href="mailto:you@example.com" class="btn-pill">Contact Me</a>
+    </div>
+  </nav>
+
+  <!-- ══ 히어로 ═════════════════════════════════════ -->
+  <header class="hero">
+    <div class="wrap">
+      <p class="hero-tag">게임 · 헬스케어 · </p>
+      <h1 class="hero-name">최준혁</h1>
+      <p class="hero-desc">
+        안녕하세요. 앞으로 나아가기 위해 도전하며
+        성장하기 위해 노력하는 자입니다.
+      </p>
+      <a href="#about" class="btn-pill">더 알아보기 ↓</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- ══ ABOUT ME ═════════════════════════════════ -->
+    <section class="section" id="about">
+      <div class="wrap">
+        <div class="section-head"><span class="mark"></span>
+          <h2>ABOUT ME</h2>
+        </div>
+
+        <dl class="info-grid">
+          <div class="info-item">
+            <dt>이름</dt>
+            <dd>최준혁</dd>
+          </div>
+          <div class="info-item">
+            <dt>생년월일</dt>
+            <dd>2001.01.27</dd>
+          </div>
+          <div class="info-item">
+            <dt>지역</dt>
+            <dd>경상북도 구미시</dd>
+          </div>
+          <div class="info-item">
+            <dt>연락처</dt>
+            <dd>010-9105-1543</dd>
+          </div>
+          <div class="info-item">
+            <dt>이메일</dt>
+            <dd>clocktick0127@gmail.com</dd>
+          </div>
+          <div class="info-item">
+            <dt>학력</dt>
+            <dd>금오공과대학교 바이오메디컬공학과</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ══ SKILLS ═══════════════════════════════════ -->
+    <section class="section" id="skills">
+      <div class="wrap">
+        <div class="section-head"><span class="mark"></span>
+          <h2>SKILLS</h2>
+        </div>
+
+        <div class="skill-grid">
+          <div class="card skill-item">
+            <h3>Language</h3>
+            <ul class="chips">
+              <li>JavaScript</li>
+              <li>Java</li>
+              <li>Python</li>
+            </ul>
+          </div>
+          <div class="card skill-item">
+            <h3>Frontend</h3>
+            <ul class="chips">
+              <li>React</li>
+              <li>Vue</li>
+              <li>React Query</li>
+            </ul>
+          </div>
+          <div class="card skill-item">
+            <h3>Backend</h3>
+            <ul class="chips">
+              <li>Spring Boot</li>
+              <li>Django</li>
+              <li>Node.js</li>
+              <li>MySQL</li>
+              <li>Redis</li>
+            </ul>
+          </div>
+          <div class="card skill-item">
+            <h3>DevOps</h3>
+            <ul class="chips">
+              <li>Docker</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ ARCHIVING ════════════════════════════════ -->
+    <section class="section" id="archiving">
+      <div class="wrap">
+        <div class="section-head"><span class="mark"></span>
+          <h2>ARCHIVING</h2>
+        </div>
+
+        <div class="archive-grid">
+          <a class="card archive-item" href="https://github.com/your-id" target="_blank" rel="noopener">
+            <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="m9 18-6-6 6-6M15 6l6 6-6 6" />
+              </svg></span>
+            <h3>GitHub</h3>
+            <p class="url">https://github.com/ClockTick0127</p>
+            <p>코드 저장소</p>
+          </a>
+          <a class="card archive-item" href="https://velog.io/@your-id" target="_blank" rel="noopener">
+            <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h11l5 5v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z" />
+                <path d="M14 4v5h5M8 13h8M8 17h5" />
+              </svg></span>
+            <h3>Blog</h3>
+            <p class="url">velog.io/@your-id</p>
+            <p>공부한 내용과 트러블슈팅 기록</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ PROJECTS (projects.json 에서 렌더링) ═════ -->
+    <section class="section" id="projects">
+      <div class="wrap">
+        <div class="section-head"><span class="mark"></span>
+          <h2>PROJECTS</h2>
+        </div>
+        <div id="project-list" class="projects">
+          <p class="state">불러오는 중…</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ CAREER ═══════════════════════════════════ -->
+    <section class="section" id="career">
+      <div class="wrap">
+        <div class="section-head"><span class="mark"></span>
+          <h2>CAREER</h2>
+        </div>
+
+        <div class="timeline">
+          <article class="tl-item reveal">
+            <div class="card tl-card">
+              <h3 class="tl-company">삼성 청년 SW 아카데미 (SSAFY) 15기</h3>
+              <p class="tl-period">2026.01 — </p>
+              <p class="tl-desc">알고리즘 및 웹 프로그래밍 집중 교육과 실무 중심의 팀 프로젝트 수행</p>
+              <ul class="chips tint">
+                <li>Python</li>
+                <li>AI</li>
+                <li>Django</li>
+                <li>Vue</li>
+                <li>MySQL</li>
+              </ul>
+
+
+              <div class="tl-tasks">
+                <div class="tl-task">
+                  <h4>관통 프로젝트</h4>
+                  <p class="when">2025.03 — 2025.08</p>
+                  <p>무엇을 왜 만들었고 어떤 결과가 있었는지 두세 줄로 적습니다. 가능하면 숫자를 함께 씁니다.</p>
+                </div>
+                <div class="tl-task">
+                  <h4>공통 프로젝트</h4>
+                  <p class="when">2025.09 — 진행 중</p>
+                  <p>같은 형식으로 이어서 작성합니다.</p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- <article class="tl-item reveal">
+            <div class="card tl-card">
+              <h3 class="tl-company">(주) 이전 회사</h3>
+              <p class="tl-period">2023.06 — 2025.02</p>
+              <p class="tl-desc">서비스 한 줄 소개.</p>
+              <ul class="chips tint">
+                <li>Vue.js</li>
+                <li>Node.js</li>
+              </ul>
+            </div>
+          </article> -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ══ 푸터 ═══════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="wrap">
+      <span class="footer-logo">DevPortfolio</span>
+      <span class="footer-copy">© 2026 최준혁. All rights reserved.</span>
+      <span class="footer-links">
+        <a href="https://github.com/your-id" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://velog.io/@your-id" target="_blank" rel="noopener">Blog</a>
+      </span>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
 </body>
+
 </html>
