@@ -9,9 +9,16 @@ const esc = (v = '') =>
     ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])
   );
 
+function getYoutubeEmbedUrl(idOrUrl) {
+  if (!idOrUrl) return '';
+  const match = idOrUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
+  if (match) return `https://www.youtube.com/embed/${match[1]}`;
+  return `https://www.youtube.com/embed/${esc(idOrUrl)}`;
+}
+
 function shot(p) {
   if (p.youtubeId) {
-    return `<iframe src="https://www.youtube.com/embed/${esc(p.youtubeId)}"
+    return `<iframe src="${getYoutubeEmbedUrl(p.youtubeId)}"
       title="${esc(p.title)} 데모 영상" loading="lazy"
       allow="accelerometer; clipboard-write; encrypted-media; picture-in-picture"
       allowfullscreen></iframe>`;
@@ -20,6 +27,17 @@ function shot(p) {
     return `<img src="${esc(p.image)}" alt="${esc(p.title)} 화면" loading="lazy">`;
   }
   return `<span class="shot-empty">projects.json 의 image 또는<br>youtubeId 를 채우면 여기에 표시됩니다</span>`;
+}
+
+// 칩 텍스트 → style.css 의 data-tech 키 ("Node.js" → "node-js")
+const techKey = (s = '') =>
+  s.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+
+// 페이지의 모든 칩(SKILLS·CAREER·프로젝트 태그)에 기술별 색을 입힙니다.
+function paintChips() {
+  document.querySelectorAll('.chips li').forEach(li => {
+    li.dataset.tech = techKey(li.textContent);
+  });
 }
 
 function links(map = {}) {
@@ -31,18 +49,48 @@ function links(map = {}) {
     ).join('');
 }
 
+// description 의 각 줄을 문단으로, "•" 로 시작하는 줄은 불릿 목록으로 묶습니다.
+function describe(desc) {
+  const lines = (Array.isArray(desc) ? desc : [desc])
+    .map(s => String(s ?? '').trim())
+    .filter(Boolean);
+
+  const out = [];
+  let bullets = [];
+  const flush = () => {
+    if (bullets.length) out.push(`<ul class="bullets">${bullets.join('')}</ul>`);
+    bullets = [];
+  };
+
+  lines.forEach(line => {
+    const bullet = line.match(/^[•·*-]\s+(.+)$/);
+    if (bullet) {
+      bullets.push(`<li>${esc(bullet[1])}</li>`);
+    } else {
+      flush();
+      out.push(`<p class="project-desc">${esc(line)}</p>`);
+    }
+  });
+  flush();
+
+  return out.join('');
+}
+
 function card(p) {
   const linkHtml = links(p.links);
+  const descContent = describe(p.description);
+
   return `<article class="card project reveal">
     <div class="project-shot">${shot(p)}</div>
     <div class="project-body">
-      ${p.tags?.length ? `<ul class="chips tint">${p.tags.map(t => `<li>${esc(t)}</li>`).join('')}</ul>` : ''}
+      ${p.tags?.length ? `<ul class="chips">${p.tags.map(t => `<li>${esc(t)}</li>`).join('')}</ul>` : ''}
       <h3 class="project-title">${esc(p.title)}</h3>
       ${p.subtitle ? `<p class="project-sub">${esc(p.subtitle)}</p>` : ''}
       ${p.period ? `<p class="project-period">${esc(p.period)}${p.team ? ' · ' + esc(p.team) : ''}</p>` : ''}
+      ${descContent}
       ${p.bullets?.length
-        ? `<ul class="bullets">${p.bullets.map(b => `<li>${esc(b)}</li>`).join('')}</ul>`
-        : ''}
+      ? `<ul class="bullets">${p.bullets.map(b => `<li>${esc(b)}</li>`).join('')}</ul>`
+      : ''}
       ${linkHtml ? `<div class="project-links">${linkHtml}</div>` : ''}
     </div>
   </article>`;
@@ -79,6 +127,7 @@ async function render() {
     </p>`;
     console.error(err);
   }
+  paintChips();
   observeReveals();
 }
 
