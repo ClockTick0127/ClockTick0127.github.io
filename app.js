@@ -9,24 +9,27 @@ const esc = (v = '') =>
     ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])
   );
 
-function getYoutubeEmbedUrl(idOrUrl) {
+function getYoutubeWatchUrl(idOrUrl) {
   if (!idOrUrl) return '';
-  const match = idOrUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
-  if (match) return `https://www.youtube.com/embed/${match[1]}`;
-  return `https://www.youtube.com/embed/${esc(idOrUrl)}`;
+  if (idOrUrl.startsWith('http://') || idOrUrl.startsWith('https://')) return idOrUrl;
+  return `https://www.youtube.com/watch?v=${idOrUrl}`;
 }
 
 function shot(p) {
-  if (p.youtubeId) {
-    return `<iframe src="${getYoutubeEmbedUrl(p.youtubeId)}"
-      title="${esc(p.title)} 데모 영상" loading="lazy"
-      allow="accelerometer; clipboard-write; encrypted-media; picture-in-picture"
-      allowfullscreen></iframe>`;
-  }
   if (p.image) {
-    return `<img src="${esc(p.image)}" alt="${esc(p.title)} 화면" loading="lazy">`;
+    return `<div class="shot-ambient" style="background-image: url('${esc(p.image)}')"></div>
+      <div class="shot-inner">
+        <div class="browser-frame">
+          <div class="browser-bar">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+          </div>
+          <img src="${esc(p.image)}" alt="${esc(p.title)} 화면" loading="lazy">
+        </div>
+      </div>`;
   }
-  return `<span class="shot-empty">projects.json 의 image 또는<br>youtubeId 를 채우면 여기에 표시됩니다</span>`;
+  return `<span class="shot-empty">projects.json 의 image 를<br>채우면 여기에 표시됩니다</span>`;
 }
 
 // 칩 텍스트 → style.css 의 data-tech 키 ("Node.js" → "node-js")
@@ -40,8 +43,14 @@ function paintChips() {
   });
 }
 
-function links(map = {}) {
-  const label = { demo: 'View Project', repo: 'GitHub', docs: '기술 문서' };
+function links(p) {
+  const map = { ...(p.links || {}) };
+  const yt = map.youtube || p.youtube || p.youtubeId;
+  if (yt) {
+    map.youtube = getYoutubeWatchUrl(yt);
+  }
+
+  const label = { demo: 'View Project', repo: 'GitHub', docs: '기술 문서', youtube: 'YouTube' };
   return Object.entries(map)
     .filter(([, url]) => url)
     .map(([k, url]) =>
@@ -77,7 +86,7 @@ function describe(desc) {
 }
 
 function card(p) {
-  const linkHtml = links(p.links);
+  const linkHtml = links(p);
   const descContent = describe(p.description);
 
   return `<article class="card project reveal">

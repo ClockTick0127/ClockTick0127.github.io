@@ -1,6 +1,6 @@
 [
   {
-    "title": "BODY BUILDER",
+    "title": "BODYBUILDER",
     "subtitle": "웹캠으로 인식한 4인의 신체 포즈가 게임 속 지형이 되는 협동 게임",
     "period": "2026.07 — 2026.08",
     "team": "6인",
@@ -10,8 +10,7 @@
       "MediaPipe",
       "dyn4j"
     ],
-    "image": "",
-    "youtubeId": "",
+    "image": "images/BODYBUILDER.png",
     "description": [
       "웹캠으로 인식한 4인의 신체 포즈를 실시간 지형으로 변환하는 협동 웹 게임 프로젝트입니다.",
       "",
@@ -22,6 +21,7 @@
     ],
     "links": {
       "repo": "https://github.com/your-id/body-builder",
+      "youtube": "https://youtu.be/OHdWT9M85hU",
       "demo": ""
     }
   },
@@ -34,8 +34,7 @@
       "Vue",
       "Django"
     ],
-    "image": "",
-    "youtubeId": "https://youtu.be/YvypqdxtBPQ",
+    "image": "images/danbi.png",
     "description": [
       "단비는 당뇨 환자들의 일상적인 식단 관리 스트레스를 줄여주기 위해 개발된 맞춤형 레시피 추천 서비스입니다. 혈당 데이터와 개인 취향을 기반으로 최적의 식단을 제안합니다.",
       "",
@@ -43,7 +42,8 @@
       "• Vue3와 Pinia를 활용한 반응형 상태 관리 구현"
     ],
     "links": {
-      "repo": "https://github.com/ClockTick0127/FJT"
+      "repo": "https://github.com/ClockTick0127/FJT",
+      "youtube": "https://youtu.be/YvypqdxtBPQ"
     }
   }
 ]
