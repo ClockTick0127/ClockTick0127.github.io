@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DevPortfolio</title>
+  <title>최준혁 — 개발 포트폴리오</title>
   <meta name="description" content="웹 게임과 실시간 통신을 다루는 개발자 포트폴리오">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,46 +12,49 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet"
     href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
-  <link rel="stylesheet" href="style.css?v=6">
+  <link rel="stylesheet" href="style.css?v=13">
 </head>
 
 <body>
+  <a class="skip-link" href="#main-content">본문으로 건너뛰기</a>
 
   <!-- ══ 내비게이션 ══════════════════════════════════ -->
-  <nav class="nav">
+  <nav class="nav" aria-label="주 메뉴">
     <div class="wrap">
-      <a href="#" class="nav-logo">DevPortfolio</a>
+      <a href="#" class="nav-logo">최준혁<span> / Developer</span></a>
       <ul class="nav-menu">
-        <li><a href="#about">About Me</a></li>
+        <li><a href="#about">About</a></li>
         <li><a href="#skills">Skills</a></li>
-        <li><a href="#archiving">Archiving</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#experience">Experience</a></li>
+        <li><a href="#archiving">Elsewhere</a></li>
       </ul>
-      <a href="mailto:you@example.com" class="btn-pill">Contact Me</a>
+      <a href="mailto:clocktick0127@gmail.com" class="contact-link">메일 보내기 <span aria-hidden="true">↗</span></a>
     </div>
   </nav>
 
   <!-- ══ 히어로 ═════════════════════════════════════ -->
   <header class="hero">
-    <div class="wrap">
-      <p class="hero-tag">게임 · 헬스케어 · </p>
-      <h1 class="hero-name">최준혁</h1>
-      <p class="hero-desc">
-        안녕하세요. 앞으로 나아가기 위해 도전하며
-        성장하기 위해 노력하는 자입니다.
-      </p>
-      <a href="#about" class="btn-pill">더 알아보기 ↓</a>
+    <div class="wrap hero-layout">
+      <div class="hero-intro">
+        <p class="eyebrow">ClockTick0127</p>
+        <h1 class="hero-name">최준혁<span>개발자</span></h1>
+        <p class="hero-desc">새로운 것을 배우며 적응합니다.<br>직접 만들고, 문제를 풀며 배운 작업들을 모았습니다.</p>
+        <a href="#projects" class="text-link">프로젝트 살펴보기 <span aria-hidden="true">↓</span></a>
+      </div>
+      <aside class="hero-note" aria-label="소개">
+        <p class="note-label">지금은</p>
+        <p>삼성 청년 SW 아카데미에서<br>성장하고 있습니다.</p>
+        <a href="https://github.com/ClockTick0127" target="_blank" rel="noopener">GitHub ↗</a>
+        <a href="https://clocktick0127.tistory.com/" target="_blank" rel="noopener">개발 기록 ↗</a>
+      </aside>
     </div>
   </header>
 
-  <main>
-    <!-- ══ ABOUT ME ═════════════════════════════════ -->
+  <main id="main-content">
     <section class="section" id="about">
       <div class="wrap">
-        <div class="section-head"><span class="mark"></span>
-          <h2>ABOUT ME</h2>
-        </div>
+        <div class="section-head"><span class="section-index">01</span><h2>About</h2></div>
 
         <dl class="info-grid">
           <div class="info-item">
@@ -82,12 +85,9 @@
       </div>
     </section>
 
-    <!-- ══ SKILLS ═══════════════════════════════════ -->
     <section class="section" id="skills">
       <div class="wrap">
-        <div class="section-head"><span class="mark"></span>
-          <h2>SKILLS</h2>
-        </div>
+        <div class="section-head"><span class="section-index">02</span><h2>Skills</h2></div>
 
         <div class="skill-grid">
           <div class="card skill-item">
@@ -126,56 +126,21 @@
       </div>
     </section>
 
-    <!-- ══ ARCHIVING ════════════════════════════════ -->
-    <section class="section" id="archiving">
-      <div class="wrap">
-        <div class="section-head"><span class="mark"></span>
-          <h2>ARCHIVING</h2>
-        </div>
-
-        <div class="archive-grid">
-          <a class="card archive-item" href="https://github.com/your-id" target="_blank" rel="noopener">
-            <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="m9 18-6-6 6-6M15 6l6 6-6 6" />
-              </svg></span>
-            <h3>GitHub</h3>
-            <p class="url">https://github.com/ClockTick0127</p>
-            <p>코드 저장소</p>
-          </a>
-          <a class="card archive-item" href="https://velog.io/@your-id" target="_blank" rel="noopener">
-            <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M4 4h11l5 5v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z" />
-                <path d="M14 4v5h5M8 13h8M8 17h5" />
-              </svg></span>
-            <h3>Blog</h3>
-            <p class="url">velog.io/@your-id</p>
-            <p>공부한 내용과 트러블슈팅 기록</p>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ══ PROJECTS (projects.json 에서 렌더링) ═════ -->
     <section class="section" id="projects">
       <div class="wrap">
-        <div class="section-head"><span class="mark"></span>
-          <h2>PROJECTS</h2>
-        </div>
+        <div class="section-head"><span class="section-index">03</span><h2>Projects</h2><p>최근 작업부터 · 담당 역할과 문제 해결 기록</p></div>
         <div id="project-list" class="projects">
           <p class="state">불러오는 중…</p>
         </div>
       </div>
     </section>
 
-    <!-- ══ EXPERIENCE ═══════════════════════════════ -->
     <section class="section" id="experience">
       <div class="wrap">
-        <div class="section-head"><span class="mark"></span>
-          <h2>EXPERIENCE</h2>
-        </div>
+        <div class="section-head"><span class="section-index">04</span><h2>Experience</h2></div>
 
         <div class="timeline">
-          <article class="tl-item reveal">
+          <article class="tl-item">
             <div class="card tl-card">
               <h3 class="tl-company">삼성 청년 SW 아카데미 (SSAFY) 15기</h3>
               <p class="tl-period">2026.01 — </p>
@@ -186,21 +151,40 @@
         </div>
       </div>
     </section>
+
+    <section class="section" id="archiving">
+      <div class="wrap">
+        <div class="section-head"><span class="section-index">05</span><h2>Elsewhere</h2></div>
+
+        <div class="archive-grid">
+          <a class="card archive-item" href="https://github.com/ClockTick0127" target="_blank" rel="noopener">
+            <h3>GitHub</h3>
+            <p class="url">https://github.com/ClockTick0127</p>
+            <p>코드 저장소</p>
+          </a>
+          <a class="card archive-item" href="https://clocktick0127.tistory.com/" target="_blank" rel="noopener">
+            <h3>Blog</h3>
+            <p class="url">clocktick0127.tistory.com</p>
+            <p>공부한 내용과 트러블슈팅 기록</p>
+          </a>
+        </div>
+      </div>
+    </section>
   </main>
 
   <!-- ══ 푸터 ═══════════════════════════════════════ -->
   <footer class="footer">
     <div class="wrap">
-      <span class="footer-logo">DevPortfolio</span>
-      <span class="footer-copy">© 2026 최준혁. All rights reserved.</span>
+      <span class="footer-logo">최준혁 <span>/ ClockTick0127</span></span>
+      <span class="footer-copy">© 2026 최준혁</span>
       <span class="footer-links">
-        <a href="https://github.com/your-id" target="_blank" rel="noopener">GitHub</a>
-        <a href="https://velog.io/@your-id" target="_blank" rel="noopener">Blog</a>
+        <a href="https://github.com/ClockTick0127" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://clocktick0127.tistory.com/" target="_blank" rel="noopener">Blog</a>
       </span>
     </div>
   </footer>
 
-  <script src="app.js"></script>
+  <script src="app.js?v=6"></script>
 </body>
 
 </html>
