@@ -29,7 +29,7 @@ function links(p) {
     map.youtube = getYoutubeWatchUrl(yt);
   }
 
-  const label = { demo: '서비스 체험', repo: 'GitHub', docs: '개발 기록', youtube: '시연 영상' };
+  const label = { demo: '서비스 체험', repo: 'GitHub', gitlab: 'GitLab', docs: '개발 기록', youtube: '시연 영상' };
   return Object.entries(map)
     .filter(([, url]) => url && !url.includes('your-id'))
     .map(([k, url]) =>
