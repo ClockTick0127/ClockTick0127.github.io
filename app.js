@@ -92,7 +92,7 @@ function detailSection(p, section, index) {
 
 function card(p, index) {
   const linkHtml = links(p);
-  const metadata = p.period && (p.teamFirst ? [p.team, p.period] : [p.period, p.team]).filter(Boolean).join(' · ');
+  const metadata = p.period && [p.period, p.team].filter(Boolean).join(' · ');
 
   return `<details class="project"${p.id ? ` id="${esc(p.id)}"` : ''}>
     <summary class="project-summary" aria-label="${esc(p.title)} 상세 내용">
