@@ -3,7 +3,9 @@
     "id": "project-devlink",
     "title": "DevLink",
     "subtitle": "AI agent를 연결해 팀의 작업 요청과 결과를 공유하는 개발 협업 도구",
-    "metadata": "6인 팀 프로젝트 · 주요 구현 2026.10.27–11.12",
+    "period": "주요 구현 2026.10.27–11.12",
+    "team": "6인 팀 프로젝트",
+    "teamFirst": true,
     "category": "개발 도구 · 협업",
     "role": "AI 도구 연결을 Rust CLI로 자동화하고, 같은 로직을 Windows 설치 앱에서 재사용했습니다.",
     "outcome": "연결 설정 9단계 통합 · 기존 연결 4개 복원",
@@ -65,8 +67,12 @@
       }
     ],
     "links": {
-      "GitHub · 클라이언트": "https://github.com/DevLink-labs/DevLink_client",
-      "GitHub · 프런트엔드": "https://github.com/DevLink-labs/DevLink_frontend"
+      "repo": "https://github.com/DevLink-labs/DevLink_client",
+      "frontend": "https://github.com/DevLink-labs/DevLink_frontend"
+    },
+    "linkLabels": {
+      "repo": "GitHub · 클라이언트",
+      "frontend": "GitHub · 프런트엔드"
     }
   },
   {

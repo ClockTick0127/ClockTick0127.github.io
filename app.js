@@ -32,9 +32,10 @@ function links(p) {
   const label = { demo: '서비스 체험', repo: 'GitHub', gitlab: 'GitLab', docs: '개발 기록', youtube: '시연 영상' };
   return Object.entries(map)
     .filter(([, url]) => url && !url.includes('your-id'))
-    .map(([k, url]) =>
-      `<a href="${esc(url)}" target="_blank" rel="noopener" aria-label="${esc(p.title)} ${label[k] || esc(k)} (새 탭)">${label[k] || esc(k)} <span aria-hidden="true">↗</span></a>`
-    ).join('');
+    .map(([k, url]) => {
+      const name = esc(p.linkLabels?.[k] || label[k] || k);
+      return `<a href="${esc(url)}" target="_blank" rel="noopener" aria-label="${esc(p.title)} ${name} (새 탭)">${name} <span aria-hidden="true">↗</span></a>`;
+    }).join('');
 }
 
 // description 의 각 줄을 문단으로, "•" 로 시작하는 줄은 불릿 목록으로 묶습니다.
@@ -91,7 +92,7 @@ function detailSection(p, section, index) {
 
 function card(p, index) {
   const linkHtml = links(p);
-  const metadata = p.metadata || (p.period && [p.period, p.team].filter(Boolean).join(' · '));
+  const metadata = p.period && (p.teamFirst ? [p.team, p.period] : [p.period, p.team]).filter(Boolean).join(' · ');
 
   return `<details class="project"${p.id ? ` id="${esc(p.id)}"` : ''}>
     <summary class="project-summary" aria-label="${esc(p.title)} 상세 내용">
