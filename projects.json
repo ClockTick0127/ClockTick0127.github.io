@@ -1,5 +1,75 @@
 [
   {
+    "id": "project-devlink",
+    "title": "DevLink",
+    "subtitle": "Codex와 Claude Code를 연결해 팀의 작업 요청과 결과를 공유하는 개발 협업 도구",
+    "metadata": "6인 팀 프로젝트 · 주요 구현 2026.10.27–11.12",
+    "category": "개발 도구 · 협업",
+    "role": "AI 도구 연결을 Rust CLI로 자동화하고, 같은 로직을 Windows 설치 앱에서 재사용했습니다.",
+    "outcome": "연결 설정 9단계 통합 · 기존 연결 4개 복원",
+    "tags": ["Rust", "Electron", "WebSocket"],
+    "image": "images/devlink-logo.png",
+    "imageAlt": "DevLink 로고",
+    "detailTitle": "AI 코딩 도구 연결을 CLI에서 Windows 설치 앱까지",
+    "overview": "6인 팀이 만든 DevLink는 Codex와 Claude Code를 팀 작업 공간에 연결하는 개발 협업 도구입니다. 팀원은 각자의 AI 코딩 도구를 쓰면서 작업을 요청하고, 진행 상태와 결과를 한곳에서 공유할 수 있습니다.",
+    "overviewRole": "Rust CLI·로컬 브로커, Electron Windows 앱, Git 수집 클라이언트",
+    "details": [
+      {
+        "title": "연결 설정 9단계를 하나의 CLI 흐름으로 통합",
+        "body": [
+          "AI 코딩 도구 하나를 연결하려면 로그인, 팀 선택, Agent 등록, 브로커 실행, MCP 설정 등을 순서대로 해야 했습니다. 설정이 중단되면 어디까지 끝났는지 확인하기 어려웠고, 같은 계정으로 두 번째 프로젝트를 연결할 때 첫 프로젝트의 브로커 잠금에 막혔습니다.",
+          "저는 연결 설정 9단계를 devlink setup으로 묶었습니다. 다시 실행하면 검증이 끝난 단계와 기존 Agent·토큰을 재사용하도록 했고, 브로커 잠금을 Agent 단위로 바꿔 같은 계정에서도 프로젝트별로 연결할 수 있게 했습니다.",
+          "Electron 앱은 같은 CLI를 실행하고 JSONL 진행 이벤트를 화면에 표시합니다. Windows 설치본에 CLI·MCP 서버·Node.js를 동봉해 사용자가 앱에서 프로젝트 폴더를 선택하고 연결을 시작할 수 있도록 구현했습니다."
+        ],
+        "media": {
+          "src": "images/devlink-setup.gif",
+          "poster": "images/devlink-setup.png",
+          "alt": "계정 확인, 팀·프로젝트 확인, AI 도구·Agent 확인, 연결 순서로 완료 상태가 표시되는 DevLink 데스크톱 실행 기록",
+          "caption": "DevLink 데스크톱의 Agent 추가 시연. 계정, 팀·프로젝트, AI 도구·Agent 확인을 거쳐 연결을 완료합니다."
+        },
+        "links": {
+          "CLI 설정 재개 PR #51": "https://github.com/DevLink-labs/DevLink_client/pull/51"
+        }
+      },
+      {
+        "title": "작업을 로컬에 저장한 뒤 ACK를 보내도록 설계",
+        "body": [
+          "브로커가 수신 확인을 먼저 보내면 로컬 저장 전에 종료될 때 작업을 잃을 수 있습니다. 브로커가 꺼져 있는 동안에는 사용자가 보낸 작업의 최종 상태도 놓칠 수 있었습니다.",
+          "저는 Rust 브로커의 WebSocket 인증·heartbeat·재접속과 수신 작업을 디스크에 저장한 뒤 ACK를 보내는 흐름을 최초 구현했습니다. 재연결하면 중앙 서버에서 보낸 작업의 최종 상태를 다시 조회해 브로커가 꺼져 있는 동안 놓친 변경을 복구하도록 했습니다.",
+          "수신함의 최종 원자적 저장과 fsync 통합은 공동으로 구현했습니다. 서버 Outbox와 재전송은 서버 담당 팀원이 구현했습니다."
+        ],
+        "links": {
+          "브로커 수신·ACK 구현 커밋 (PR #17)": "https://github.com/DevLink-labs/DevLink_client/pull/17/commits/83169e8fa9c01e63965bf4b1072a9f19adfc075e"
+        }
+      },
+      {
+        "title": "Windows 앱 업데이트 뒤 기존 연결 복원",
+        "body": [
+          "Windows 설치 프로그램이 DevLink의 종료 절차보다 먼저 브로커를 종료하면서, 업데이트 뒤 재시작할 연결 목록이 비는 문제를 발견했습니다.",
+          "NSIS의 종료 순서를 바꿔 DevLink가 연결 목록을 먼저 저장한 뒤 브로커를 종료하도록 했습니다. 업데이트된 앱은 시작할 때 저장된 목록을 읽어 연결을 복원합니다.",
+          "당시 개발 PC에서 실제 Windows 설치본으로 설치·업데이트·실행·제거를 포함한 검증 항목 9개를 모두 통과했고, 기존 연결 4개가 모두 복원됐습니다."
+        ],
+        "links": {
+          "Windows 패키징·연결 복원 PR #17": "https://github.com/DevLink-labs/DevLink_frontend/pull/17"
+        }
+      },
+      {
+        "title": "추가 기여 · Git 수집 클라이언트",
+        "numbered": false,
+        "body": [
+          "저는 최근 90일의 커밋과 현재 작업 파일을 수집하는 클라이언트를 구현했습니다. 커밋은 배치별 체크포인트를 남겨 중단 후 동기화를 이어가고, 작업 파일 업로드에는 서버의 If-Match 계약을 적용했습니다. 팀이 구현한 Agent 추천 기능은 이 데이터를 사용합니다."
+        ],
+        "links": {
+          "Git 이력·작업 파일 수집 PR #128": "https://github.com/DevLink-labs/DevLink_client/pull/128"
+        }
+      }
+    ],
+    "links": {
+      "GitHub · 클라이언트": "https://github.com/DevLink-labs/DevLink_client",
+      "GitHub · 프런트엔드": "https://github.com/DevLink-labs/DevLink_frontend"
+    }
+  },
+  {
     "title": "On:마음",
     "subtitle": "가전 전력 사용 패턴으로 독거 어르신의 이상 징후를 감지하는 안심 알림 서비스",
     "period": "2026.08 — 2026.10",

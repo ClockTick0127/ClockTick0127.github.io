@@ -70,6 +70,7 @@ h1, h2, h3, h4, p, dl, dd { margin: 0; }
 .project-summary:focus-visible { outline-offset: 7px; }
 .project-shot { display: flex; align-items: center; justify-content: center; min-width: 0; padding: 20px; background: #f5f5f5; }
 .project-shot img { width: 100%; height: auto; aspect-ratio: 16/10; object-fit: contain; border: 1px solid #e0e0e0; background: white; }
+#project-devlink .project-shot img { padding-inline: 12%; }
 .shot-empty { color: var(--muted); font-size: 12px; }
 .project-body { min-width: 0; }
 .project-meta { display: flex; align-items: center; gap: 14px; font: 400 12px/1.6 var(--sans); color: var(--muted); margin-bottom: 13px; }
@@ -101,6 +102,7 @@ h1, h2, h3, h4, p, dl, dd { margin: 0; }
 .project[open] .project-chevron { transform: rotate(180deg); }
 .project-summary:hover .project-title { color: var(--accent); }
 .project-expanded-inner { padding-block: 0 32px; }
+.project-detail-title { margin-bottom: 20px; font-size: clamp(24px, 3vw, 32px); font-weight: 700; line-height: 1.35; letter-spacing: -.045em; word-break: keep-all; }
 .project-detail-section { padding-block: 32px; border-top: 1px solid #cccccc; }
 .project-detail-section h4 { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; font-size: 21px; font-weight: 700; line-height: 1.5; word-break: keep-all; }
 .detail-step { display: inline-grid; place-items: center; flex: none; width: 28px; height: 28px; background: var(--ink); color: var(--bg); font-size: 12px; font-weight: 600; letter-spacing: 0; }
@@ -109,6 +111,14 @@ h1, h2, h3, h4, p, dl, dd { margin: 0; }
 .project-overview h4 { display: block; margin: 0; font-size: 15px; }
 .project-desc { font-size: 15px; color: #333333; line-height: 1.9; word-break: keep-all; }
 .project-desc + .project-desc { margin-top: 16px; }
+.project-media { margin: 24px 0 0; }
+.project-media-preview img { width: 100%; }
+.project-media figcaption { margin-top: 10px; color: var(--muted); font-size: 13px; word-break: keep-all; }
+.project-media figcaption .project-links { margin-top: 6px; }
+
+/* Keep the status rows legible by framing the left side of the full recording. */
+#project-devlink .project-media-preview { position: relative; overflow: hidden; aspect-ratio: 30 / 17; }
+#project-devlink .project-media-preview img { position: absolute; top: -28.43%; left: 0; width: 213.33%; max-width: none; }
 .bullets { display: grid; gap: 14px; margin-top: 18px; }
 .bullets li { position: relative; padding-left: 17px; color: #333333; font-size: 15px; line-height: 1.85; word-break: keep-all; }
 .bullets li::before { content: '·'; position: absolute; left: 0; color: var(--ink); }
@@ -213,4 +223,5 @@ h1, h2, h3, h4, p, dl, dd { margin: 0; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .project::details-content, .project-chevron { transition: none; }
+  #project-devlink .project-media-preview img { position: static; width: 100%; }
 }

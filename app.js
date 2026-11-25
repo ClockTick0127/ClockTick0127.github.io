@@ -17,7 +17,7 @@ function getYoutubeWatchUrl(idOrUrl) {
 
 function shot(p) {
   if (p.image) {
-    return `<img src="${esc(p.image)}" alt="${esc(p.title)} 화면" loading="lazy" width="1200" height="704">`;
+    return `<img src="${esc(p.image)}" alt="${esc(p.imageAlt || `${p.title} 화면`)}" loading="lazy" width="1200" height="704">`;
   }
   return `<span class="shot-empty">projects.json 의 image 를<br>채우면 여기에 표시됩니다</span>`;
 }
@@ -64,17 +64,43 @@ function describe(desc) {
   return out.join('');
 }
 
+function detailSection(p, section, index) {
+  const sectionLinks = links({ title: p.title, links: section.links });
+  const media = section.media;
+
+  return `<section class="project-detail-section">
+    <h4>${section.numbered === false ? '' : `<span class="detail-step" aria-hidden="true">${String(index + 1).padStart(2, '0')}</span>`}${esc(section.title)}</h4>
+    <div class="project-detail-copy">
+      ${describe(section.body)}
+      ${media ? `<figure class="project-media">
+        <div class="project-media-preview">
+          <picture>
+            ${media.poster ? `<source media="(prefers-reduced-motion: reduce)" srcset="${esc(media.poster)}">` : ''}
+            <img src="${esc(media.src)}" alt="${esc(media.alt)}" loading="lazy">
+          </picture>
+        </div>
+        <figcaption>
+          ${esc(media.caption)}
+          <span class="project-links"><a href="${esc(media.src)}" target="_blank" rel="noopener" aria-label="원본 GIF 열기 (새 탭)">원본 GIF 열기 <span aria-hidden="true">↗</span></a></span>
+        </figcaption>
+      </figure>` : ''}
+      ${sectionLinks ? `<div class="project-links">${sectionLinks}</div>` : ''}
+    </div>
+  </section>`;
+}
+
 function card(p, index) {
   const linkHtml = links(p);
+  const metadata = p.metadata || (p.period && [p.period, p.team].filter(Boolean).join(' · '));
 
-  return `<details class="project">
+  return `<details class="project"${p.id ? ` id="${esc(p.id)}"` : ''}>
     <summary class="project-summary" aria-label="${esc(p.title)} 상세 내용">
     <div class="project-shot">${shot(p)}</div>
     <div class="project-body">
       <div class="project-meta"><span class="project-number">${String(index + 1).padStart(2, '0')}</span>${p.category ? `<span>${esc(p.category)}</span>` : ''}</div>
       <h3 class="project-title" id="project-title-${index}">${esc(p.title)}</h3>
       ${p.subtitle ? `<p class="project-sub">${esc(p.subtitle)}</p>` : ''}
-      ${p.period ? `<p class="project-period">${esc(p.period)}${p.team ? ' · ' + esc(p.team) : ''}</p>` : ''}
+      ${metadata ? `<p class="project-period">${esc(metadata)}</p>` : ''}
       ${p.role || p.outcome ? `<dl class="project-facts">
         ${p.role ? `<div><dt>담당</dt><dd>${esc(p.role)}</dd></div>` : ''}
         ${p.outcome ? `<div><dt>결과</dt><dd>${esc(p.outcome)}</dd></div>` : ''}
@@ -86,20 +112,43 @@ function card(p, index) {
     </summary>
     <div class="project-expanded">
       <div class="project-expanded-inner">
+      ${p.detailTitle ? `<h4 class="project-detail-title">${esc(p.detailTitle)}</h4>` : ''}
       <section class="project-detail-section project-overview">
         <h4>프로젝트 소개</h4>
-        <div>${describe(p.overview || p.description)}${p.bullets?.length ? `<ul class="bullets">${p.bullets.map(b => `<li>${esc(b)}</li>`).join('')}</ul>` : ''}</div>
+        <div>${describe(p.overview || p.description)}
+          ${p.overviewRole ? `<p class="project-desc"><strong>담당 범위</strong> ${esc(p.overviewRole)}</p>` : ''}
+          ${p.bullets?.length ? `<ul class="bullets">${p.bullets.map(b => `<li>${esc(b)}</li>`).join('')}</ul>` : ''}
+        </div>
       </section>
-      ${(p.details || []).map((section, step) => `<section class="project-detail-section">
-        <h4><span class="detail-step" aria-hidden="true">${String(step + 1).padStart(2, '0')}</span>${esc(section.title)}</h4>
-        <div class="project-detail-copy">${describe(section.body)}</div>
-      </section>`).join('')}
+      ${(p.details || []).map((section, step) => detailSection(p, section, step)).join('')}
       ${linkHtml ? `<div class="project-resource-links"><p>관련 자료</p><div class="project-links">${linkHtml}</div></div>` : ''}
       <button type="button" class="project-collapse" aria-label="${esc(p.title)} 상세 내용 접기">상세 내용 접기 ↑</button>
       </div>
     </div>
   </details>`;
 }
+
+function openLinkedProject() {
+  const project = document.getElementById(window.location.hash.slice(1));
+  if (!project?.matches('#project-list > details.project')) return;
+
+  project.open = true;
+  project.scrollIntoView({ block: 'start', behavior: 'instant' });
+}
+
+window.addEventListener('hashchange', openLinkedProject);
+
+mount.addEventListener('toggle', event => {
+  const project = event.target;
+  if (!project.matches('details.project[id]')) return;
+
+  const hash = `#${project.id}`;
+  if (project.open && window.location.hash !== hash) {
+    history.replaceState(history.state, '', hash);
+  } else if (!project.open && window.location.hash === hash) {
+    history.replaceState(history.state, '', '#projects');
+  }
+}, true);
 
 mount.addEventListener('click', event => {
   const trigger = event.target.closest('.project-collapse');
@@ -123,6 +172,7 @@ async function render() {
     mount.innerHTML = projects.length
       ? projects.map(card).join('')
       : `<p class="state">아직 등록된 프로젝트가 없습니다. projects.json 에 항목을 추가하세요.</p>`;
+    openLinkedProject();
   } catch (err) {
     mount.innerHTML = `<p class="state">
       projects.json 을 불러오지 못했습니다.<br>
